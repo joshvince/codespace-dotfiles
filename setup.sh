@@ -38,22 +38,14 @@ switch_to_zsh() {
   echo "Shell: ${SHELL}"
 }
 
-# Clone zsh plugins to oh-my-zsh dir
-install_zsh_plugin() {
-  echo "Installing $1"
-  repo_name=https://github.com/zsh-users/${1}.git
-  destination=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/${1}
-
-  git clone $repo_name $destination
-}
-
-install_zsh_plugins() {
-  echo "Installing zsh plugins"
-  install_zsh_plugin "powerlevel10k"
+# Install powerlevel10k theme
+install_powerlevel10k() {
+  echo "Installing powerlevel10k theme"
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 }
 
 # Run steps
 create_symlinks
 install_ohmyzsh
 switch_to_zsh
-install_zsh_plugins
+install_powerlevel10k
