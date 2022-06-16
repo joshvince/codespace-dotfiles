@@ -44,8 +44,16 @@ install_powerlevel10k() {
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 }
 
+# Install thefuck
+install_thefuck() {
+  sudo apt update
+  sudo apt install python3-dev python3-pip python3-setuptools
+  pip3 install thefuck --user
+}
+
 # Run steps
 create_symlinks
 install_ohmyzsh
 switch_to_zsh
 install_powerlevel10k
+install_thefuck
