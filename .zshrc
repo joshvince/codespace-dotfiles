@@ -18,6 +18,7 @@ source $ZSH/oh-my-zsh.sh
 
 export DOTFILES="/workspaces/.codespaces/.persistedshare/codespace-dotfiles"
 alias newsession="${DOTFILES}/newsession.sh"
+alias helpme="${DOTFILES}/helpful_commands.sh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

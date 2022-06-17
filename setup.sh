@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Thank you to @bebbs for the inspiration (in some cases the actual code) for this script
+# https://github.com/bebbs/dotfiles/blob/main/install.sh
+
 echo "Starting dotfiles install"
 
 set -eo pipefail
@@ -71,3 +74,8 @@ install_ohmyzsh
 switch_to_zsh
 install_powerlevel10k
 install_thefuck
+
+# enable running of other helpful scripts in this folder
+chmod +x ./newsession.sh
+chmod +x ./setup.sh
+chmod +x ./helpful_commands.sh

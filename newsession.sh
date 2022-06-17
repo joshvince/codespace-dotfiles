@@ -2,18 +2,19 @@
 set -eo pipefail
 bold=$(tput bold)
 standout=$(tput smso)
+green=$(tput setaf 2)
 normal=$(tput sgr0)
 
-printf "\n\n 🤔 Checking for the carwow command..."
+check_carwow() {
+  printf "\n\n 🤔 Checking for the carwow command..."
 
-if ! command -v carwow &> /dev/null; then
-  printf "\n\n\n\n🛑 carwow was not found. Close this window and try again!\n\n\n"
-  exit
-else
-  printf "\n ✅ carwow command found, let's begin..."
-fi
-
-printf "\n\n👋 ${bold}Welcome to your codespace.${normal} Let's get setup...\n\n"
+  if ! command -v carwow &> /dev/null; then
+    printf "\n\n\n\n🛑 carwow was not found. Close this window and try again!\n\n\n"
+    exit
+  else
+    printf "\n ✅ carwow command found, let's begin..."
+  fi
+}
 
 credentials() {
   printf "\n🔐 ${bold}Checking credentials...${normal}\n"
@@ -23,15 +24,10 @@ credentials() {
   if [ -f "$SSH_KEY_LOCATION" ]; then
     printf "⭐️ Your SSH key exists in this environment!"
   else
-    cat << EOF
-💥 Your SSH key is not yet saved to this environment.
+    printf "💥 Your SSH key is not yet saved to this environment.\n\n"
+    printf "${green}gh codespace cp ~/.ssh/id_ed25519 remote:.ssh/${normal}\n"
+    printf "Go ahead and ${bold}run this 👆 command from your host machine${normal} and then come back here."
 
-${standout}gh codespace cp ~/.ssh/id_ed25519 remote:.ssh/${normal}
-
-Go ahead and ${bold}run this 👆 command from your host machine${normal} and then come back here.
-
-
-EOF
     read -s -r -p "Once you've done that, press ENTER to continue "
   fi
 
@@ -82,9 +78,12 @@ check_status() {
   eval carwow ps
 }
 
-
+# the program
+check_carwow
+printf "\n\n👋 ${bold}Welcome to your codespace.${normal} Let's get setup...\n\n"
 credentials
 heroku
 start_core
 start_es67
 check_status
+printf "\n\n\n 🚀 ${bold}Done! Happy coding!${normal}\n\n\n"
