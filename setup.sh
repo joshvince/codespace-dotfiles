@@ -19,15 +19,18 @@ create_symlinks() {
         rm -rf ~/$name
         ln -s $script_dir/$name ~/$name
     done
+
+    echo "✅ Symlinks have been created"
 }
 
 # Attempt to install oh-my-zsh, if it is not already configured
 install_ohmyzsh() {
   if [[ -d ~/.oh-my-zsh ]]; then
-    echo "ohmyzsh is already installed."
+    echo "✅ ohmyzsh is already installed."
   else
     echo "Installing ohmyzsh"
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    echo "✅ Installed ohmyzsh"
   fi
 }
 
@@ -35,20 +38,31 @@ install_ohmyzsh() {
 switch_to_zsh() {
   echo "Changing default shell to zsh"
   sudo chsh -s "$(which zsh)" "$(whoami)"
-  echo "Shell: ${SHELL}"
+  echo "✅  Shell: ${SHELL}"
 }
 
 # Install powerlevel10k theme
 install_powerlevel10k() {
-  echo "Installing powerlevel10k theme"
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+  if [[ -d ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k ]]; then
+    echo "✅ powerlevel10k is already installed."
+  else
+    echo "Installing powerlevel10k theme"
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+    echo "✅ Installed powerlevel10k theme"
+  fi
 }
 
 # Install thefuck
 install_thefuck() {
-  sudo apt update
-  sudo apt install python3-dev python3-pip python3-setuptools
-  pip3 install thefuck --user
+  if command -v fuck &> /dev/null; then
+    printf "✅ thefuck is already installed"
+  else
+    printf "installing thefuck"
+    sudo apt update
+    sudo apt install python3-dev python3-pip python3-setuptools
+    pip3 install thefuck --user
+    echo "✅ Installed thefuck"
+  fi
 }
 
 # Run steps
