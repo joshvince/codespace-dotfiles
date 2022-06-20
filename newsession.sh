@@ -36,7 +36,7 @@ credentials() {
   while true; do
     read -p "Would you like to start the SSH agent and add your passphrase? [y/n] " yn
     case $yn in
-      [Yy]* ) eval $(ssh-agent); ssh-add; break;;
+      [Yy]* ) eval `ssh-agent -s`; ssh-add; break;;
       [Nn]* ) printf "\n\nNo worries!\n"; break;;
     esac
   done
@@ -45,7 +45,11 @@ credentials() {
 heroku() {
   printf "\n👩🏻‍💻 ${bold}Checking for Heroku...${normal}"
 
-  printf "TODO: add these!"
+  printf "💥 I can't tell if you are logged into Heroku. To be sure, let's log in"
+  printf "${green}bin/carwow codespace heroku-login${normal}\n"
+  printf "Go ahead and ${bold}run this 👆 command from your host machine${normal} and then come back here."
+
+  read -s -r -p "Once you've done that, press ENTER to continue "
 }
 
 start_core() {
