@@ -36,7 +36,7 @@ credentials() {
   while true; do
     read -p "Would you like to start the SSH agent and add your passphrase? [y/n] " yn
     case $yn in
-      [Yy]* ) eval `ssh-agent -s`); ssh-add; break;;
+      [Yy]* ) eval `ssh-agent -s`; ssh-add; break;;
       [Nn]* ) printf "\n\nNo worries!\n"; break;;
     esac
   done
