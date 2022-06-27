@@ -68,12 +68,47 @@ install_thefuck() {
   fi
 }
 
+install_solargraph() {
+  custom_ruby_build_prefix=/usr/local/custom
+  custom_ruby_location=~/local/.ruby
+
+  if [[ -d ${custom_ruby_location}/bin/solargraph ]]; then
+    printf "\n\n\n\n🛑 solargraph was not found.\n\n\n"
+    while true; do
+      read -p "Would you like to install a custom version of ruby-build, ruby 3.1.2 and solargraph?" yn
+      case $yn in
+        [Yy]* ) printf "👷🏻‍♂️ Installing ruby-build..."
+                eval `sudo mkdir /usr/local/custom`;
+                eval `sudo cd ~ && git clone https://github.com/rbenv/ruby-build.git`;
+                eval `PREFIX=${custom_ruby_build} ./ruby-build/install.sh`;
+                printf "👷🏻‍♂️ Ruby build installed."
+                printf "💍 Installing ruby build dependencies. This will take a while..."
+                eval `apt-get install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev`;
+                printf "💍 Ruby's build dependencies installed."
+                printf "💎 Installing Ruby (3.1.2) Better go make a coffee..."
+                eval `sudo /usr/local/custom/bin/ruby-build 3.1.2 ${custom_ruby_location}`;
+                printf "💎 Ruby installed."
+                printf "🌞 Installing solargraph...."
+                eval `${custom_ruby_location}/bin/gem install solargraph`;
+                printf "🌞 Solargraph was installed!"
+                break;;
+        [Nn]* ) printf "\n\nNo worries! You can add this later\n"; break;;
+      esac
+    done
+  else
+    printf "⭐️ Solargraph is already installed and should be good to use with VS Code \n"
+
+    printf "✅ Ruby tooling all sorted\n"
+  fi
+}
+
 # Run steps
 create_symlinks
 install_ohmyzsh
 switch_to_zsh
 install_powerlevel10k
 install_thefuck
+install_solargraph
 
 # enable running of other helpful scripts in this folder
 chmod +x ./newsession.sh
